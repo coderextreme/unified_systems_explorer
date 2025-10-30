@@ -2,11 +2,8 @@
 import { GoogleGenAI } from "@google/genai";
 import type { SystemNode } from '../types';
 
-if (!process.env.API_KEY) {
-    console.warn("API_KEY environment variable not set. Using a placeholder key.");
-}
-
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || 'YOUR_API_KEY_HERE' });
+// The API key is expected to be in the environment.
+const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
 export const generateNodeDetails = async (node: SystemNode): Promise<string> => {
   const prompt = `
@@ -33,9 +30,6 @@ export const generateNodeDetails = async (node: SystemNode): Promise<string> => 
     return response.text;
   } catch (error) {
     console.error("Error generating content with Gemini:", error);
-    if (error instanceof Error && error.message.includes('API key not valid')) {
-       return "### API Key Error\n\nPlease ensure your Gemini API key is correctly configured in the environment variables. This application requires a valid API key to generate content.";
-    }
-    return "### Error\n\nAn error occurred while generating content. Please check the console for more details.";
+    return "### Error\n\nAn error occurred while generating content. Please ensure your API key is configured correctly and check the console for more details.";
   }
 };

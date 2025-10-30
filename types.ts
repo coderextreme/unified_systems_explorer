@@ -1,4 +1,3 @@
-
 export enum NodeType {
   DOMAIN = 'DOMAIN',
   SYSTEM = 'SYSTEM',
@@ -13,4 +12,5 @@ export interface SystemNode {
   type: NodeType;
   description: string;
   children?: SystemNode[];
+  position?: { x: number; y: number };
 }
